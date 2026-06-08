@@ -680,3 +680,4 @@ document.addEventListener('DOMContentLoaded',()=>{
  const mp=document.getElementById('mapaNiebla');
  if(mp) mp.innerHTML='🔴 Estación Aráoz 85%<br>🟡 Tacanas 55%<br>🟢 Ranchillos 20%';
 });
+alert("APP.JS CARGADO");
