@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Niebla IA</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+<link rel="manifest"
+href="manifest.json">
+
+<link rel="icon"
+href="icono-192.png">
+
+<meta name="theme-color"
+content="#2563eb">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- MENU LATERAL -->
+
+<div
+id="menuLateral"
+class="menu-lateral">
+
+<div class="menu-header">
+
+<img
+src="icono-192.png"
+alt="Niebla IA">
+
+<h3>Niebla IA</h3>
+
+</div>
+
+<button onclick="mostrar('inicio')">
+🏠 Inicio
+</button>
+
+<button onclick="mostrar('pronostico')">
+📅 Pronóstico
+</button>
+
+<button onclick="mostrar('mapa')">
+🗺️ Mapa
+</button>
+
+<button onclick="mostrar('chat')">
+🤖 IA
+</button>
+
+<button onclick="mostrar('ajustes')">
+⚙️ Ajustes
+</button>
+
+</div>
+
+<!-- TOP BAR -->
+
+<header class="topbar">
+
+<button
+class="menu-btn"
+onclick="toggleMenu()">
+
+☰
+
+</button>
+
+<div class="logo-area">
+
+<div class="logo-icon">
+🌫️
+</div>
+
+<h1>Niebla IA</h1>
+
+</div>
+
+<button class="gps-btn">
+📍
+</button>
+
+</header>
+
+<!-- INICIO -->
+
+<section
+id="inicio"
+class="pantalla">
+
+<div class="hero">
+
+<div class="hero-left">
+
+<div class="robot">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
+alt="Robot">
+
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="globo">
+
+<h2 id="saludoUsuario">
+
+¡Hola!
+
+</h2>
+
+<p id="mensaje">
+
+Analizando condiciones meteorológicas...
+
+</p>
+
+<div class="hora-niebla">
+
+Niebla probable
+
+<span id="horaNiebla">
+
+--:--
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="ubicacion">
+
+📍 Estación Aráoz, Tucumán
+
+<div class="actualizado">
+
+Actualización automática
+
+</div>
+
+</div>
+<!-- TARJETA RIESGO -->
+
+<div class="card-riesgo">
+
+<div class="riesgo-info">
+
+<h3>
+
+RIESGO DE NIEBLA
+
+</h3>
+
+<div
+id="estadoNiebla"
+class="estado">
+
+Calculando...
+
+</div>
+
+<p id="descripcionRiesgo">
+
+Analizando condiciones...
+
+</p>
+
+</div>
+
+<div class="riesgo-circulo">
+
+<div class="circulo">
+
+<span id="riesgo">
+
+0%
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- DATOS -->
+
+<div class="datos">
+
+<div class="dato">
+
+🌡️
+
+<h4 id="temp">
+
+--°C
+
+</h4>
+
+<span>
+
+Temperatura
+
+</span>
+
+</div>
+
+<div class="dato">
+
+💧
+
+<h4 id="humedad">
+
+--%
+
+</h4>
+
+<span>
+
+Humedad
+
+</span>
+
+</div>
+
+<div class="dato">
+
+🌬️
+
+<h4 id="viento">
+
+-- km/h
+
+</h4>
+
+<span>
+
+Viento
+
+</span>
+
+</div>
+
+<div class="dato">
+
+👁️
+
+<h4 id="visibilidad">
+
+-- m
+
+</h4>
+
+<span>
+
+Visibilidad
+
+</span>
+
+</div>
+
+</div>
+
+<!-- GRAFICO -->
+
+<div class="grafico-card">
+
+<h3>
+
+📈 Probabilidad de niebla por hora
+
+</h3>
+
+<canvas
+id="graficoNiebla">
+
+</canvas>
+
+<div
+id="infoGrafico"
+class="grafico-info">
+
+Calculando...
+
+</div>
+
+</div>
+
+<button
+class="abrir-chat"
+onclick="mostrar('chat')">
+
+💬 Preguntale a Niebla IA
+
+</button>
+
+
+<div class="v10-panel">
+<h2>🚀 Niebla IA V10</h2>
+<select id="selectorLocalidad">
+<option>Estación Aráoz</option>
+<option>Tacanas</option>
+<option>Ranchillos</option>
+<option>Lastenia</option>
+</select>
+
+<div class="extras-grid">
+<div class="dato"><h4 id="puntoRocio">--°C</h4><span>Punto de rocío</span></div>
+<div class="dato"><h4 id="sensacion">--°C</h4><span>Sensación térmica</span></div>
+<div class="dato"><h4 id="uv">--</h4><span>Índice UV</span></div>
+<div class="dato"><h4 id="nubosidad">--%</h4><span>Nubosidad</span></div>
+</div>
+
+<div id="predictorBox" class="grafico-card">
+🧠 Predictor Inteligente de Niebla
+</div>
+
+<div id="mapaNiebla" class="grafico-card">
+🗺️ Mapa de riesgo de niebla local
+</div>
+</div>
+
+</section>
+
+<!-- CHAT -->
+
+<section
+id="chat"
+class="pantalla oculto">
+
+<div class="chat-header">
+
+<button
+onclick="mostrar('inicio')">
+
+←
+
+</button>
+
+<div class="chat-perfil">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+
+<div>
+
+<h3>
+
+Niebla IA
+
+</h3>
+
+<p>
+
+Asistente meteorológico
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="chatMensajes"
+class="chat-mensajes">
+
+<div class="mensaje-ia">
+
+Hola 👋
+
+<br><br>
+
+Puedo ayudarte con:
+
+<br><br>
+
+• Riesgo de niebla
+
+<br>
+
+• Temperatura
+
+<br>
+
+• Humedad
+
+<br>
+
+• Viento
+
+<br>
+
+• Pronóstico
+
+</div>
+
+</div>
+
+<div class="chat-input">
+
+<input
+id="pregunta"
+type="text"
+placeholder="Escribí tu pregunta...">
+
+<button
+onclick="preguntarIA()">
+
+➤
+
+</button>
+
+</div>
+
+<div class="voz-box">
+
+<button
+class="btn-microfono"
+onclick="escuchar()">
+
+🎤 Hablar
+
+</button>
+
+<div id="textoEscuchado">
+
+Esperando voz...
+
+</div>
+
+<div id="respuestaVoz">
+
+</div>
+
+</div>
+
+</section>
+<!-- PRONOSTICO -->
+
+<section
+id="pronostico"
+class="pantalla oculto">
+
+<h2 style="padding:20px;">
+
+📅 Pronóstico
+
+</h2>
+
+<div class="pronostico-lista">
+
+<div class="pronostico-item">
+
+<h3>
+
+Hoy
+
+</h3>
+
+<p id="pronosticoHoy">
+
+Cargando...
+
+</p>
+
+</div>
+
+<div class="pronostico-item">
+
+<h3>
+
+Mañana
+
+</h3>
+
+<p id="pronosticoManana">
+
+Cargando...
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MAPA -->
+
+<section
+id="mapa"
+class="pantalla oculto">
+
+<h2 style="padding:20px;">
+
+🗺️ Mapa
+
+</h2>
+
+<div
+id="mapaContainer"
+style="padding:20px;">
+
+<iframe
+width="100%"
+height="450"
+frameborder="0"
+style="border:0;border-radius:20px;"
+src="https://www.google.com/maps?q=Estacion%20Araoz%20Tucuman&output=embed"
+allowfullscreen>
+
+</iframe>
+
+</div>
+
+</section>
+
+<!-- AJUSTES -->
+
+<section
+id="ajustes"
+class="pantalla oculto">
+
+<h2 style="padding:20px;">
+
+⚙️ Ajustes
+
+</h2>
+
+<div class="card-ajuste">
+
+<h3>
+
+Tema
+
+</h3>
+
+<button
+onclick="cambiarTema()">
+
+🌙 Cambiar modo oscuro
+
+</button>
+
+</div>
+
+<div class="card-ajuste">
+
+<h3>
+
+Usuario
+
+</h3>
+
+<button
+onclick="cambiarNombre()">
+
+✏️ Cambiar nombre
+
+</button>
+
+</div>
+
+<div class="card-ajuste">
+
+<h3>
+
+Asistente de voz
+
+</h3>
+
+<p>
+
+Activado
+
+</p>
+
+</div>
+
+<div class="card-ajuste">
+
+<h3>
+
+Versión
+
+</h3>
+
+<p>
+
+Niebla IA v2.0
+
+</p>
+
+</div>
+
+</section>
+
+<!-- MENU INFERIOR -->
+
+<nav class="bottom-nav">
+
+<button
+onclick="mostrar('inicio')">
+
+🏠
+
+<span>
+
+Inicio
+
+</span>
+
+</button>
+
+<button
+onclick="mostrar('pronostico')">
+
+📅
+
+<span>
+
+Pronóstico
+
+</span>
+
+</button>
+
+<button
+onclick="mostrar('mapa')">
+
+🗺️
+
+<span>
+
+Mapa
+
+</span>
+
+</button>
+
+<button
+onclick="mostrar('chat')">
+
+🤖
+
+<span>
+
+IA
+
+</span>
+
+</button>
+
+<button
+onclick="mostrar('ajustes')">
+
+⚙️
+
+<span>
+
+Ajustes
+
+</span>
+
+</button>
+
+</nav>
+
+<section id="conductor" class="pantalla oculto">
+<h2 style="padding:20px;">🚗 Modo Conductor</h2>
+<div class="card-ajuste">
+<h3 id="estadoConduccion">Calculando...</h3>
+<p id="consejoConduccion">Analizando visibilidad...</p>
+</div>
+</section>
+
+<section id="astronomia" class="pantalla oculto">
+<h2 style="padding:20px;">🌙 Astronomía</h2>
+<div class="card-ajuste"><p>🌅 Amanecer: <span id="amanecer">--:--</span></p></div>
+<div class="card-ajuste"><p>🌇 Atardecer: <span id="atardecer">--:--</span></p></div>
+</section>
+
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
