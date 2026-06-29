@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<link rel="stylesheet" href="style.css">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Niebla IA</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- MENÚ -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            🌫️ <span>Niebla IA</span>
+
+        </div>
+
+        <button onclick="mostrar('inicio')">🏠 Inicio</button>
+
+        <button onclick="mostrar('pronostico')">📅 Pronóstico</button>
+
+        <button onclick="mostrar('mapa')">🗺️ Mapa</button>
+
+        <button onclick="mostrar('chat')">🤖 Nebulax</button>
+
+        <button onclick="mostrar('conductor')">🚗 Conductor</button>
+
+        <button onclick="mostrar('registros')">📋 Informes</button>
+
+        <button onclick="mostrar('ajustes')">⚙️ Ajustes</button>
+
+    </aside>
+    
+
+    <!-- CONTENIDO -->
+
+    <main class="contenido">
+<header class="topbar">
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <div class="top-left">
+        <h2>🌫️ Dashboard</h2>
+        <p>Actualizado hace <span id="ultimaActualizacion">2 minutos</span></p>
+    </div>
+
+    <div class="top-right">
+
+        <select id="selectorLocalidad">
+            <option>📍 Estación Aráoz</option>
+            <option>📍 Tacanas</option>
+            <option>📍 Ranchillos</option>
+            <option>📍 Lastenia</option>
+        </select>
+
+        <button class="icon-btn">🔔</button>
+        <button class="icon-btn">🌙</button>
+
+    </div>
+
+</header>
+        <!-- TARJETA PRINCIPAL -->
+
+        <section class="hero-card">
+
+    <div class="hero-info">
+
+        <h1 id="temp">18°C</h1>
+
+        <h2 id="estadoNiebla">🌫️ Niebla Moderada</h2>
+
+        <p id="ubicacionActual">📍 Estación Aráoz - Tucumán</p>
+
+        <div class="maxmin">
+            <span>⬆ Máx 21°C</span>
+            <span>⬇ Mín 13°C</span>
+        </div>
+
+    </div>
+
+    <div class="hero-icon">
+        🌫️
+    </div>
+
+    <div class="hero-riesgo">
+
+    <h4>RIESGO DE NIEBLA</h4>
+
+    <div class="riesgo-header">
+
+        <span class="estado">ALTO</span>
+
+        <span class="porcentaje" id="riesgo">82%</span>
+
+    </div>
+
+    <div class="barra-riesgo">
+        <div class="barra"></div>
+    </div>
+
+    <p class="riesgo-texto">
+        Alta probabilidad de formación de niebla durante las próximas horas.
+    </p>
+
+    <small>
+        Confianza IA: <strong>96%</strong>
+    </small>
+
+
+</section>
+
+        <!-- TARJETAS -->
+
+        <section class="grid">
+
+            <div class="card">
+
+                <h3>💧 Humedad</h3>
+
+                <h2 id="humedad">95%</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>🌬️ Viento</h3>
+
+                <h2 id="viento">8 km/h</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>👁️ Visibilidad</h3>
+
+                <h2 id="visibilidad">180 m</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>🌡️ Punto de rocío</h3>
+
+                <h2 id="puntoRocio">13°C</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>☀️ Índice UV</h3>
+
+                <h2 id="uv">3</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>🌤️ Presión</h3>
+
+                <h2 id="presion">1017 hPa</h2>
+
+            </div>
+
+        </section>
+
+        <!-- PRONÓSTICO -->
+
+        <section class="card grande">
+
+            <h2>📅 Pronóstico por horas</h2>
+
+            <section class="card grande">
+
+    <div class="titulo-seccion">
+        <h2>📅 Pronóstico por horas</h2>
+        <a href="#">Ver todo →</a>
+    </div>
+
+    <div class="forecast">
+
+        <div class="forecast-card active">
+            <span>Ahora</span>
+            <div class="icono">🌫️</div>
+            <h2>16°</h2>
+            <small>95%</small>
+        </div>
+
+        <div class="forecast-card">
+            <span>07:00</span>
+            <div class="icono">🌫️</div>
+            <h2>15°</h2>
+            <small>90%</small>
+        </div>
+
+        <div class="forecast-card">
+            <span>08:00</span>
+            <div class="icono">🌫️</div>
+            <h2>15°</h2>
+            <small>88%</small>
+        </div>
+
+        <div class="forecast-card">
+            <span>09:00</span>
+            <div class="icono">☁️</div>
+            <h2>17°</h2>
+            <small>55%</small>
+        </div>
+
+        <div class="forecast-card">
+            <span>10:00</span>
+            <div class="icono">🌤️</div>
+            <h2>19°</h2>
+            <small>30%</small>
+        </div>
+
+        <div class="forecast-card">
+            <span>11:00</span>
+            <div class="icono">☀️</div>
+            <h2>22°</h2>
+            <small>10%</small>
+        </div>
+
+    </div>
+
+</section>
+
+        </section>
+
+        <!-- MAPA -->
+
+        <section class="card grande">
+
+            <h2>🗺️ Mapa</h2>
+
+            <div id="mapaContainer"></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>

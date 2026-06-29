@@ -254,11 +254,24 @@ async function cargarClima(){
 
     try{
 
-        const lat = -26.83;
-        const lon = -65.14;
+        const localidad =
+localStorage.getItem(
+"localidadSeleccionada"
+) || "Estación Aráoz";
+
+const lat =
+localidades[localidad].lat;
+
+const lon =
+localidades[localidad].lon;
 
         const url =
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}
+&current=temperature_2m,relative_humidity_2m,wind_speed_10m,apparent_temperature,is_day
+&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,dew_point_2m,visibility,cloud_cover,uv_index
+&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset
+&timezone=auto`
+.replace(/\s/g,"");
 
         const respuesta =
         await fetch(url);
@@ -280,7 +293,30 @@ async function cargarClima(){
         Math.round(
             data.current.wind_speed_10m
         );
+const puntoRocio =
+Math.round(
+    data.hourly.dew_point_2m[0]
+);
 
+const visibilidad =
+Math.round(
+    data.hourly.visibility[0]
+);
+
+const nubosidad =
+Math.round(
+    data.hourly.cloud_cover[0]
+);
+
+const uv =
+Math.round(
+    data.hourly.uv_index[0]
+);
+
+const sensacion =
+Math.round(
+    data.current.apparent_temperature
+);
         let riesgo = 0;
 
         if(humedad >= 70) riesgo += 20;
@@ -303,7 +339,14 @@ async function cargarClima(){
             viento,
             riesgo
         };
-
+        actualizarConduccion();
+document.getElementById(
+"ubicacionActual"
+).innerHTML =
+`📍 ${localidad}, Tucumán
+<div class="actualizado">
+Actualización automática
+</div>`;
         document.getElementById("temp").innerHTML =
         temp + "°C";
 
@@ -312,7 +355,44 @@ async function cargarClima(){
 
         document.getElementById("viento").innerHTML =
         viento + " km/h";
+        document.getElementById("puntoRocio").innerHTML =
+puntoRocio + "°C";
 
+document.getElementById("sensacion").innerHTML =
+sensacion + "°C";
+
+document.getElementById("uv").innerHTML =
+uv;
+
+document.getElementById("nubosidad").innerHTML =
+nubosidad + "%";
+
+document.getElementById("visibilidad").innerHTML =
+visibilidad + " m";
+        document.getElementById(
+"puntoRocio"
+).innerHTML =
+puntoRocio + "°C";
+
+document.getElementById(
+"sensacion"
+).innerHTML =
+sensacion + "°C";
+
+document.getElementById(
+"uv"
+).innerHTML =
+uv;
+
+document.getElementById(
+"nubosidad"
+).innerHTML =
+nubosidad + "%";
+
+document.getElementById(
+"visibilidad"
+).innerHTML =
+visibilidad + " m";
         document.getElementById("riesgo").innerHTML =
         riesgo + "%";
 
@@ -399,8 +479,8 @@ async function cargarClima(){
         document.getElementById("pronosticoHoy").innerHTML =
         `Máx ${Math.round(data.daily.temperature_2m_max[0])}°C<br>Mín ${Math.round(data.daily.temperature_2m_min[0])}°C`;
 
-        document.getElementById("pronosticoManana").innerHTML =
-        `Máx ${Math.round(data.daily.temperature_2m_max[1])}°C<br>Mín ${Math.round(data.daily.temperature_2m_min[1])}°C`;
+       document.getElementById("pronosticoManana").innerHTML =
+`Máx ${Math.round(data.daily.temperature_2m_max[1])}°C<br>Mín ${Math.round(data.daily.temperature_2m_min[1])}°C`;
 
         // HORA PROBABLE DE NIEBLA
 
@@ -464,7 +544,7 @@ async function cargarClima(){
         }
 
         crearGrafico(riesgo);
-
+actualizarConduccion
     }
     catch(error){
 
@@ -622,7 +702,7 @@ function cargarUsuario(){
     if(saludo){
 
         saludo.innerHTML =
-        `¡Hola ${nombre}! 👋`;
+`🌫️ Hola ${nombre}, soy Nebulax`;
 
     }
 
@@ -653,13 +733,27 @@ function cambiarNombre(){
 
 // ==== V9 EXTRA ====
 function actualizarConduccion(){
+
  if(!window.climaActual) return;
+
  const e=document.getElementById('estadoConduccion');
  const c=document.getElementById('consejoConduccion');
+
  if(!e||!c) return;
- if(climaActual.riesgo>=70){e.innerHTML='🔴 Riesgoso'; c.innerHTML='Evitar conducir si es posible';}
- else if(climaActual.riesgo>=40){e.innerHTML='🟡 Precaución'; c.innerHTML='Usar luces bajas';}
- else {e.innerHTML='🟢 Seguro'; c.innerHTML='Buenas condiciones';}
+
+ if(climaActual.riesgo>=70){
+   e.innerHTML='🔴 Riesgoso';
+   c.innerHTML='Evitar conducir si es posible';
+ }
+ else if(climaActual.riesgo>=40){
+   e.innerHTML='🟡 Precaución';
+   c.innerHTML='Usar luces bajas';
+ }
+ else{
+   e.innerHTML='🟢 Seguro';
+   c.innerHTML='Buenas condiciones';
+ }
+
 }
 
 const localidades={
@@ -673,18 +767,68 @@ document.addEventListener('DOMContentLoaded',()=>{
  const s=document.getElementById('selectorLocalidad');
  if(s){
    s.value=localStorage.getItem('localidadSeleccionada')||'Estación Aráoz';
-   s.onchange=()=>localStorage.setItem('localidadSeleccionada',s.value);
+  s.onchange=()=>{
+
+localStorage.setItem(
+'localidadSeleccionada',
+s.value
+);
+
+cargarClima();
+
+};
  }
  const pr=document.getElementById('predictorBox');
  if(pr) pr.innerHTML='🧠 Inicio probable 03:00 | Fin 08:00 | Confianza 85%';
  const mp=document.getElementById('mapaNiebla');
  if(mp) mp.innerHTML='🔴 Estación Aráoz 85%<br>🟡 Tacanas 55%<br>🟢 Ranchillos 20%';
 });
-navigator.geolocation.getCurrentPosition(
-(position) => {
-    alert("GPS ACTIVO");
-},
-(error) => {
-    alert("ERROR GPS: " + error.message);
+function cambiarColor(color){
+
+    document.documentElement.style.setProperty("--color-principal", color);
+    document.documentElement.style.setProperty("--boton", color);
+
+    localStorage.setItem("temaColor", color);
 }
-);
+
+function temaAzul(){
+    cambiarColor("#2563eb");
+}
+
+function temaVerde(){
+    cambiarColor("#22c55e");
+}
+
+function temaMorado(){
+    cambiarColor("#9333ea");
+}
+
+function temaRojo(){
+    cambiarColor("#ef4444");
+}
+
+const colorGuardado = localStorage.getItem("temaColor");
+
+if(colorGuardado){
+    cambiarColor(colorGuardado);
+}
+function cambiarColor(color){
+
+    document.documentElement.style.setProperty("--color-principal", color);
+    document.documentElement.style.setProperty("--boton", color);
+
+    localStorage.setItem("temaColor", color);
+
+}
+
+window.addEventListener("load",()=>{
+
+    const color=localStorage.getItem("temaColor");
+
+    if(color){
+
+        cambiarColor(color);
+
+    }
+
+});
